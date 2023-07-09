@@ -11,6 +11,7 @@ use App\Models\OnlineOrderItem;
 use App\Models\OnlineOrderGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class KitchenController extends Controller
 {
@@ -150,6 +151,7 @@ class KitchenController extends Controller
             }
         }
         $modifiedOrderGroups = array();
+
         foreach ($submittedOrderGroups as $submittedOrder) {
             $temp = new Temporary;
             $temp->id = $submittedOrder->id;
@@ -184,6 +186,7 @@ class KitchenController extends Controller
             $temp->is_settled = $submittedOrder->is_settled;
             $temp->is_ready = $submittedOrder->is_ready;
             $temp->created_at = $submittedOrder->created_at;
+            $temp->remainingTime = '';
             //get order items here
             $orderedItems = OnlineOrderItem::where('order_group_id', $submittedOrder->id)->get();
             $temp->orderedItems = $orderedItems;
