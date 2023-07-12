@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'b5b40bbcb9809b4c389f98ff1d6685decad2edf6',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -167,12 +167,14 @@
             'dev_requirement' => false,
         ),
         'fzaninotto/faker' => array(
-            'pretty_version' => 'v1.9.2',
-            'version' => '1.9.2.0',
-            'reference' => '848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '5ffe7db6c80f441f150fc88008d64e64af66634b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../fzaninotto/faker',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '1.9.x-dev',
+            ),
             'dev_requirement' => true,
         ),
         'graham-campbell/result-type' => array(
@@ -422,9 +424,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'b5b40bbcb9809b4c389f98ff1d6685decad2edf6',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -521,9 +523,9 @@
             'dev_requirement' => false,
         ),
         'league/oauth2-server' => array(
-            'pretty_version' => '8.5.2',
-            'version' => '8.5.2.0',
-            'reference' => '8ab731e84eef904b5913ba31b38116acf8ea50b6',
+            'pretty_version' => '8.5.3',
+            'version' => '8.5.3.0',
+            'reference' => 'eb91b4190e7f6169053ebf8ffa352d47e756b2ce',
             'type' => 'library',
             'install_path' => __DIR__ . '/../league/oauth2-server',
             'aliases' => array(),
@@ -707,9 +709,9 @@
             'dev_requirement' => false,
         ),
         'phpseclib/phpseclib' => array(
-            'pretty_version' => '3.0.20',
-            'version' => '3.0.20.0',
-            'reference' => '543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67',
+            'pretty_version' => '3.0.21',
+            'version' => '3.0.21.0',
+            'reference' => '4580645d3fc05c189024eb3b834c6c1e4f0f30a1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpseclib/phpseclib',
             'aliases' => array(),
@@ -761,9 +763,9 @@
             'dev_requirement' => true,
         ),
         'phpunit/phpunit' => array(
-            'pretty_version' => '9.6.9',
-            'version' => '9.6.9.0',
-            'reference' => 'a9aceaf20a682aeacf28d582654a1670d8826778',
+            'pretty_version' => '9.6.10',
+            'version' => '9.6.10.0',
+            'reference' => 'a6d351645c3fe5a30f5e86be6577d946af65a328',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(),
@@ -871,8 +873,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0',
             ),
         ),
         'psr/simple-cache' => array(

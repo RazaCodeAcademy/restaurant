@@ -33,6 +33,7 @@ class FoodItemController extends Controller
 
             $temp->name = $food->name;
             $temp->slug = $food->slug;
+            $temp->ingredients = $food->ingredients != '' ? explode(',', $food->ingredients) : [];
             $temp->is_special = $food->is_special;
 
             if (!is_null($food->image)) {
@@ -96,6 +97,7 @@ class FoodItemController extends Controller
         $foodItem = new FoodItem;
         $foodItem->food_group_id = $request->food_group_id;
         $foodItem->name = $request->name;
+        $foodItem->ingredients = $request->ingredients;
         $foodItem->slug =  Str::random(3).'-'.time().'-'.Str::slug($request->name);
         $foodItem->is_special = $request->isSpecial;
 

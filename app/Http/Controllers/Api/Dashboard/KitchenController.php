@@ -64,9 +64,12 @@ class KitchenController extends Controller
             $temp->return_amount = $submittedOrder->return_amount;
             $temp->is_paid = $submittedOrder->is_paid;
             $temp->is_accepted = $submittedOrder->is_accepted;
+            $temp->accepted_time = $submittedOrder->accepted_time;
+            $temp->time_to_deliver = $submittedOrder->time_to_deliver;
             $temp->is_cancelled = $submittedOrder->is_cancelled;
             $temp->is_settled = $submittedOrder->is_settled;
             $temp->is_ready = $submittedOrder->is_ready;
+            $temp->remainingTime = '';
             //get order items here
             $orderedItems = OrderItem::where('order_group_id', $submittedOrder->id)->get();
             $temp->orderedItems = $orderedItems;
@@ -83,8 +86,12 @@ class KitchenController extends Controller
         if ($orderGroup->is_cancelled != 1) {
             if ($orderGroup->is_accepted == 1) {
                 $orderGroup->is_accepted = 0;
+                $orderGroup->time_to_deliver = 0;
+                $orderGroup->accepted_time = null;
             } else {
                 $orderGroup->is_accepted = 1;
+                $orderGroup->time_to_deliver = $request->time_to_deliver;
+                $orderGroup->accepted_time = date('Y-m-d H:i:s');
             }
             $orderGroup->save();
         } else {
@@ -182,6 +189,7 @@ class KitchenController extends Controller
             $temp->time_to_deliver = $submittedOrder->time_to_deliver;
             $temp->is_accepted = $submittedOrder->is_accepted;
             $temp->is_accepted_by_kitchen = $submittedOrder->is_accepted_by_kitchen;
+            $temp->accepted_by_kitchen_time = $submittedOrder->accepted_by_kitchen_time;
             $temp->is_cancelled = $submittedOrder->is_cancelled;
             $temp->is_settled = $submittedOrder->is_settled;
             $temp->is_ready = $submittedOrder->is_ready;
@@ -202,8 +210,12 @@ class KitchenController extends Controller
         if ($orderGroup->is_cancelled != 1) {
             if ($orderGroup->is_accepted_by_kitchen == 1) {
                 $orderGroup->is_accepted_by_kitchen = 0;
+                $orderGroup->time_to_deliver = 0;
+                $orderGroup->accepted_by_kitchen_time = null;
             } else {
                 $orderGroup->is_accepted_by_kitchen = 1;
+                $orderGroup->time_to_deliver = $request->time_to_deliver;
+                $orderGroup->accepted_by_kitchen_time = date('Y-m-d H:i:s');
             }
             $orderGroup->save();
         } else {
