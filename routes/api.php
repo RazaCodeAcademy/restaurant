@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\Settings\SettingsController;
 use App\Http\Controllers\Api\Settings\DeliveryMenCheckController;
 use App\Http\Controllers\Api\Settings\OnlinePaymentController;
 use App\Http\Controllers\ShowManageStockController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\Api\Users\AdminStaffController;
 use App\Http\Controllers\Api\Users\CustomerController;
 use App\Http\Controllers\Api\Users\DeliveryController;
@@ -96,6 +97,7 @@ Route::group(['prefix' => 'website'], function () {
         //admins
         Route::post('/accept-order', [OnlineCustomerController::class, 'acceptOnlineOrders']); //online order route
         Route::post('/cancel-order', [OnlineCustomerController::class, 'cancelOnlineOrders']); //online order route
+        
     });
 });
 
@@ -134,6 +136,11 @@ Route::group(['prefix' => 'settings'], function () {
     
     Route::get('/show-manage-stock-menu-info', [ShowManageStockController::class, 'getCheckData']); //get managestock info
 
+    // stripe payments
+    Route::controller(StripePaymentController::class)->group(function(){
+        // Route::get('stripe', 'stripe');
+        Route::post('stripe', 'stripePost')->name('stripe.post');
+    });
     // paypal client id
     // Route::post('/paypal-client-id',function(Request $request){
     //     // return $request->paypal_id;

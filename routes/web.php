@@ -13,6 +13,13 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use App\Http\Controllers\StripePaymentController;
+
+// stripe payments
+// Route::controller(StripePaymentController::class)->group(function(){
+//     Route::get('stripe', 'stripe');
+//     Route::post('stripe', 'stripePost')->name('stripe.post');
+// });
 
 //Used for handling the html file of react project
 View::addExtension('html', 'php');

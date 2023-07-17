@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Branch;
 use App\Models\OrderItem;
+use App\Models\OrderGroup;
 
 class OrderHistory extends JsonResource
 {
@@ -15,7 +16,7 @@ class OrderHistory extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
+    { 
         return [
             'id' => $this->id,
             'work_period_id' => $this->work_period_id,
@@ -28,6 +29,7 @@ class OrderHistory extends JsonResource
             'customer_id' => $this->customer_id,
             'customer_name' => $this->customer_name,
             'customer_phone' => $this->customer ? $this->customer->phn_no : '',
+            'reservation_date_time' => $this->reservation_date_time,
             'table_id' => $this->table_id,
             'table_name' => $this->table_name,
 

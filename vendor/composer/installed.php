@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'b5b40bbcb9809b4c389f98ff1d6685decad2edf6',
+        'reference' => 'd5e3a3453c147e6d576f09429bd2907eb1e3a514',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -426,7 +426,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'b5b40bbcb9809b4c389f98ff1d6685decad2edf6',
+            'reference' => 'd5e3a3453c147e6d576f09429bd2907eb1e3a514',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1077,6 +1077,15 @@
             'install_path' => __DIR__ . '/../sebastian/version',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'stripe/stripe-php' => array(
+            'pretty_version' => 'v10.17.0',
+            'version' => '10.17.0.0',
+            'reference' => '73383b44de153f4d602b90dad3ef075259bcecef',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stripe/stripe-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'swiftmailer/swiftmailer' => array(
             'pretty_version' => 'v6.3.0',

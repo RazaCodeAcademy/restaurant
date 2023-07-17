@@ -33,7 +33,8 @@ class FoodItemController extends Controller
 
             $temp->name = $food->name;
             $temp->slug = $food->slug;
-            $temp->ingredients = $food->ingredients != '' ? explode(',', $food->ingredients) : [];
+            $temp->ingredients = $food->ingredients;
+            $temp->allergies = $food->allergies;
             $temp->is_special = $food->is_special;
 
             if (!is_null($food->image)) {
@@ -97,27 +98,28 @@ class FoodItemController extends Controller
         $foodItem = new FoodItem;
         $foodItem->food_group_id = $request->food_group_id;
         $foodItem->name = $request->name;
+        $foodItem->allergies = $request->allergies;
         $foodItem->ingredients = $request->ingredients;
         $foodItem->slug =  Str::random(3).'-'.time().'-'.Str::slug($request->name);
         $foodItem->is_special = $request->isSpecial;
 
         $foodImage = $request->file('image');
-        if (!is_null($foodImage)) {
-            $request->validate(
-                [
-                'image'  => ['file','mimes:jpg,jpeg,png,gif','max:5000']
-            ],
-                [
-                    'image.mimes'                => 'Please select a valid image file',
-                    'image.max'                  => 'Please select a file less than 5MB'
-                ]
-            );
-            //storing file to server
-            $name = time()."-".Str::slug($foodImage->getClientOriginalName()).".".$foodImage->getClientOriginalExtension();
-            $foodImage->move(public_path().'/images/food_item/', $name);
-            //updating db
-            $foodItem->image = '/images/food_item/'.$name;
-        }
+        // if (!is_null($foodImage)) {
+        //     $request->validate(
+        //         [
+        //         'image'  => ['file','mimes:jpg,jpeg,png,gif','max:5000']
+        //     ],
+        //         [
+        //             'image.mimes'                => 'Please select a valid image file',
+        //             'image.max'                  => 'Please select a file less than 5MB'
+        //         ]
+        //     );
+        //     //storing file to server
+        //     $name = time()."-".Str::slug($foodImage->getClientOriginalName()).".".$foodImage->getClientOriginalExtension();
+        //     $foodImage->move(public_path().'/images/food_item/', $name);
+        //     //updating db
+        //     $foodItem->image = '/images/food_item/'.$name;
+        // }
 
         $foodItem->has_property = $request->hasProperty;
         if ($request->hasProperty == 1) {
@@ -152,28 +154,28 @@ class FoodItemController extends Controller
         $foodItem = FoodItem::where('id', $request->itemId)->first();
         $foodImage = $request->file('image');
         if (!is_null($foodImage)) {
-            $request->validate(
-                [
-                'image'  => ['file','mimes:jpg,jpeg,png,gif','max:5000']
-            ],
-                [
-                    'image.mimes'                => 'Please select a valid image file',
-                    'image.max'                  => 'Please select a file less than 5MB'
-                ]
-            );
+            // $request->validate(
+            //     [
+            //     'image'  => ['file','mimes:jpg,jpeg,png,gif','max:5000']
+            // ],
+            //     [
+            //         'image.mimes'                => 'Please select a valid image file',
+            //         'image.max'                  => 'Please select a file less than 5MB'
+            //     ]
+            // );
 
-            if (!is_null($foodItem->image)) {
-                //delete old image
-                if (file_exists(public_path($foodItem->image))) {
-                    unlink(public_path($foodItem->image));
-                }
-            }
+            // if (!is_null($foodItem->image)) {
+            //     //delete old image
+            //     if (file_exists(public_path($foodItem->image))) {
+            //         unlink(public_path($foodItem->image));
+            //     }
+            // }
 
-            //storing file to server
-            $name = time()."-".Str::slug($foodImage->getClientOriginalName()).".".$foodImage->getClientOriginalExtension();
-            $foodImage->move(public_path().'/images/food_item/', $name);
-            //updating db
-            $foodItem->image = '/images/food_item/'.$name;
+            // //storing file to server
+            // $name = time()."-".Str::slug($foodImage->getClientOriginalName()).".".$foodImage->getClientOriginalExtension();
+            // $foodImage->move(public_path().'/images/food_item/', $name);
+            // //updating db
+            // $foodItem->image = '/images/food_item/'.$name;
         } else {
             $foodItem->name = $request->name;
             if (!is_null($request->itemNewFoodGroup)) {
@@ -186,6 +188,8 @@ class FoodItemController extends Controller
 
 
             $foodItem->is_special = $request->isSpecial;
+            $foodItem->allergies = $request->allergies;
+            $foodItem->ingredients = $request->ingredients;
 
             if ($request->deleteProperty == 1) {
                 $foodItem->property_group_ids = null;

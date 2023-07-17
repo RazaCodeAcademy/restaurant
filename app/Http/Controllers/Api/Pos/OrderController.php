@@ -35,6 +35,7 @@ class OrderController extends Controller
             //branch
             $newGroup->branch_id = $request->branch['id'];
             $newGroup->branch_name = $request->branch['name'];
+            $newGroup->reservation_date_time = $request->reservation_date_time;
 
             //customer
             if ($request->newCustomer == 0) {
@@ -181,6 +182,9 @@ class OrderController extends Controller
                     $newItem->properties = json_encode($propertyArray);
                 }
                 $newItem->quantity = $item['quantity'];
+                $newItem->allergies = $item['item']['allergies'];
+                $newItem->ingredients = $item['item']['ingredients'];
+                $newItem->note = isset($item['item']['note']) ? $item['item']['note'] : null;
                 $newItem->is_cooking = 0;
                 $newItem->is_ready = 0;
                 $newItem->save();
@@ -414,6 +418,9 @@ class OrderController extends Controller
                     }
 
                     $newItem->quantity = $item['quantity'];
+                    $newItem->allergies = $item['item']['allergies'];
+                    $newItem->ingredients = $item['item']['ingredients'];
+                    $newItem->note = isset($item['item']['note']) ? $item['item']['note'] : null;
                     $newItem->is_cooking = 0;
                     $newItem->is_ready = 0;
                     $newItem->save();

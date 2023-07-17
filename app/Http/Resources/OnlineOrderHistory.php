@@ -21,6 +21,8 @@ class OnlineOrderHistory extends JsonResource
               'work_period_id' => $this->work_period_id,
               'user_id' => $this->user_id,
               'user_name' => $this->user_name,
+              'user_phone' => $this->user ? $this->user->phn_no : '',
+              'reservation_date_time' => $this->reservation_date_time,
               'pos_user_id' => $this->pos_user_id,
               'branch_id' => $this->branch_id,
               'theBranch' => Branch::where('id', $this->branch_id)->first(),

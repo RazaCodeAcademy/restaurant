@@ -13,6 +13,8 @@ use App\Models\OnlineOrderGroup;
 use App\Models\OnlineOrderItem;
 use App\Http\Resources\OrderHistory;
 use App\Http\Resources\OnlineOrderHistory;
+use Carbon\Carbon;
+
 
 class OrderHistoryController extends Controller
 {
@@ -20,11 +22,31 @@ class OrderHistoryController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $currentDateTime = Carbon::now();
         if ($user->branch_id == null) {
             $submittedOrderGroups = OrderHistory::collection(OrderGroup::latest()->paginate(perPagePaginate()));
         } else {
             $submittedOrderGroups =  OrderHistory::collection(OrderGroup::where('branch_id', $user->branch_id)->latest()->paginate(perPagePaginate()));
         }
+        foreach ($submittedOrderGroups as $orderGroup) {
+            if($orderGroup->reservation_date_time){
+                $reservationDateTime = Carbon::parse($orderGroup->reservation_date_time);
+                
+                // Add 30 minutes to the reservation date and time
+                $reservationDateTime->addMinutes(30);
+            
+                if ($reservationDateTime->greaterThan($currentDateTime)) {
+                    $orderGroup->reservation_date_time = date('Y-m-d h:i:s A', strtotime($orderGroup->reservation_date_time));
+                } else {
+                    $orderGroup->reservation_date_time = null;
+                    $orderGroup->save();
+                    $orderGroup->reservation_date_time = 'Expired';
+                }
+            }else{
+                $orderGroup->reservation_date_time = 'Expired';
+            }
+        }
+        
         return $submittedOrderGroups;
     }
     //pos search orders
@@ -42,10 +64,31 @@ class OrderHistoryController extends Controller
     public function indexOnline()
     {
         $user = Auth::user();
+        $currentDateTime = Carbon::now();
+        
         if ($user->branch_id == null) {
             $submittedOrderGroups = OnlineOrderHistory::collection(OnlineOrderGroup::latest()->paginate(perPagePaginate()));
         } else {
             $submittedOrderGroups =  OnlineOrderHistory::collection(OnlineOrderGroup::where('branch_id', $user->branch_id)->latest()->paginate(perPagePaginate()));
+        }
+
+        foreach ($submittedOrderGroups as $orderGroup) {
+            if($orderGroup->reservation_date_time){
+                $reservationDateTime = Carbon::parse($orderGroup->reservation_date_time);
+                
+                // Add 30 minutes to the reservation date and time
+                $reservationDateTime->addMinutes(30);
+            
+                if ($reservationDateTime->greaterThan($currentDateTime)) {
+                    $orderGroup->reservation_date_time = date('Y-m-d h:i:s A', strtotime($orderGroup->reservation_date_time));
+                } else {
+                    $orderGroup->reservation_date_time = null;
+                    $orderGroup->save();
+                    $orderGroup->reservation_date_time = 'Expired';
+                }
+            }else{
+                $orderGroup->reservation_date_time = 'Expired';
+            }
         }
         return $submittedOrderGroups;
     }
