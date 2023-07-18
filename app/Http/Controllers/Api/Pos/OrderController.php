@@ -57,6 +57,7 @@ class OrderController extends Controller
                         $submittedOrder->slug =  Str::random(3) . '-' . time() . '-' . Str::slug($submittedOrder->name);
                         $submittedOrder->branch_id = $newGroup->branch_id;
                         $submittedOrder->phn_no = $request->newCustomerInfo['number'];
+                        $submittedOrder->address = $request->newCustomerInfo['address'];
                         $submittedOrder->save();
                         
                         //assign to order group
@@ -74,6 +75,7 @@ class OrderController extends Controller
                     $submittedOrder->slug =  Str::random(3) . '-' . time() . '-' . Str::slug($submittedOrder->name);
                     $submittedOrder->branch_id = $newGroup->branch_id;
                     $submittedOrder->phn_no = $request->newCustomerInfo['number'];
+                    $submittedOrder->address = $request->newCustomerInfo['address'];
                     $submittedOrder->save();
                     //assign to order group
                     $newGroup->customer_id = $submittedOrder->id;
@@ -256,6 +258,7 @@ class OrderController extends Controller
                             //new customer
                             $submittedOrder = new Customer;
                             $submittedOrder->name = $request->newCustomerInfo['name'];
+                            $submittedOrder->address = $request->newCustomerInfo['address'];
                             $submittedOrder->slug =  Str::random(3) . '-' . time() . '-' . Str::slug($submittedOrder->name);
                             $submittedOrder->branch_id = $newGroup->branch_id;
                             $submittedOrder->phn_no = $request->newCustomerInfo['number'];
@@ -275,6 +278,7 @@ class OrderController extends Controller
                         $submittedOrder->slug =  Str::random(3) . '-' . time() . '-' . Str::slug($submittedOrder->name);
                         $submittedOrder->branch_id = $newGroup->branch_id;
                         $submittedOrder->phn_no = $request->newCustomerInfo['number'];
+                        $submittedOrder->address = $request->newCustomerInfo['address'];
                         $submittedOrder->save();
                         //assign to order group
                         $newGroup->customer_id = $submittedOrder->id;

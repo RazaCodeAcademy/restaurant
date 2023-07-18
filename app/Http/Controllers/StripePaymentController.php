@@ -23,26 +23,26 @@ class StripePaymentController extends Controller
     public function stripePost(Request $request)
     {
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-    
-        $paymentIntent = Stripe\PaymentIntent::create ([
+
+        try {
+            $paymentIntent = Stripe\PaymentIntent::create ([
                 "amount" => 100 * $request->amount,
                 "currency" => $request->currency,
                 "payment_method" => $request->stripeToken,
                 "description" => "Payment has been recieved from $request->name" 
-        ]);
+            ]);
 
-        try {
             $paymentIntent->confirm();
             // Payment is successful
-            echo "Payment confirmed successfully!";
             return [
-                "success" => true
+                "success" => true,
+                "message" => "Payment confirmed successfully!"
             ];
           } catch (\Stripe\Exception\ApiErrorException $e) {
             // Handle error
-            echo "Error: " . $e->getMessage();
             return [
-                "success" => false
+                "success" => false,
+                "message" => $e->getMessage()
             ];
           }
       

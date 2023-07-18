@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Dashboard\OrderHistoryController;
 use App\Http\Controllers\Api\Dashboard\DeliveryUserOrderController;
 use App\Http\Controllers\Api\Dashboard\WorkPeriodController;
 use App\Http\Controllers\Api\Food\FoodGroupController;
+use App\Http\Controllers\Api\Food\FoodAllergyController;
 use App\Http\Controllers\Api\Food\FoodItemController;
 use App\Http\Controllers\Api\Food\FoodUnitController;
 use App\Http\Controllers\Api\Food\PropertyGroupController;
@@ -293,6 +294,12 @@ Route::group(['prefix' => 'settings', 'middleware' => ['auth:api']], function ()
         Route::post('/update-food-group-enable-disable', [FoodGroupController::class, 'updateFoodGroupStatus']); //update food-group
         Route::get('/delete-food-group/{slug}', [FoodGroupController::class, 'destroy']); //delete food-group
 
+        //food allergy
+        Route::post('/new-food-allergy', [FoodAllergyController::class, 'store']); //store new food-allergy
+        Route::post('/update-food-allergy', [FoodAllergyController::class, 'update']); //update food-allergy
+        Route::post('/update-food-allergy-enable-disable', [FoodAllergyController::class, 'updateFoodAllergyStatus']); //update food-allergy
+        Route::get('/delete-food-allergy/{slug}', [FoodAllergyController::class, 'destroy']); //delete food-allergy
+
         //food unit
         Route::get('/get-food-unit', [FoodUnitController::class, 'index']); //get all food-unit
         Route::post('/new-food-unit', [FoodUnitController::class, 'store']); //store new food-unit
@@ -362,6 +369,10 @@ Route::group(['prefix' => 'settings', 'middleware' => ['auth:api']], function ()
         //food group
         Route::get('/get-food-group', [FoodGroupController::class, 'index']); //get all food-group
         Route::get('/get-manage/food/groups', [FoodGroupController::class, 'index']); //get all food-group
+        
+        // food allergy
+        Route::get('/get-food-allergy', [FoodAllergyController::class, 'index']); //get all food-allergy
+        Route::get('/get-manage/food/allergies', [FoodAllergyController::class, 'index']); //get all food-allergy
 
         //variation
         Route::get('/get-variation', [VariationController::class, 'index']); //get all variation
