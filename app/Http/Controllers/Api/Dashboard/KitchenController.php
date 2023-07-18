@@ -37,6 +37,12 @@ class KitchenController extends Controller
         }
         $modifiedOrderGroups = array();
         foreach ($submittedOrderGroups as $submittedOrder) {
+
+            //add delivered mintustes into accepted date time
+            $acceptedDateTime = Carbon::parse($submittedOrder->accepted_time);
+            $updatedDateTime = $acceptedDateTime->addMinutes($submittedOrder->time_to_deliver);
+            $remainingTimeMinutes = $updatedDateTime->diffInMinutes();
+
             $temp = new Temporary;
             $temp->id = $submittedOrder->id;
             $temp->work_period_id = $submittedOrder->work_period_id;
@@ -64,12 +70,12 @@ class KitchenController extends Controller
             $temp->return_amount = $submittedOrder->return_amount;
             $temp->is_paid = $submittedOrder->is_paid;
             $temp->is_accepted = $submittedOrder->is_accepted;
-            $temp->accepted_time = $submittedOrder->accepted_time;
+            $temp->accepted_time = $updatedDateTime->format('Y-m-d H:i:s');
             $temp->time_to_deliver = $submittedOrder->time_to_deliver;
             $temp->is_cancelled = $submittedOrder->is_cancelled;
             $temp->is_settled = $submittedOrder->is_settled;
             $temp->is_ready = $submittedOrder->is_ready;
-            $temp->remainingTime = '';
+            $temp->remainingTime = $remainingTimeMinutes;
             //get order items here
             $orderedItems = OrderItem::where('order_group_id', $submittedOrder->id)->get();
             $temp->orderedItems = $orderedItems;
@@ -160,6 +166,12 @@ class KitchenController extends Controller
         $modifiedOrderGroups = array();
 
         foreach ($submittedOrderGroups as $submittedOrder) {
+
+            //add delivered mintustes into accepted date time
+            $acceptedDateTime = Carbon::parse($submittedOrder->accepted_by_kitchen_time);
+            $updatedDateTime = $acceptedDateTime->addMinutes($submittedOrder->time_to_deliver);
+            $remainingTimeMinutes = $updatedDateTime->diffInMinutes();
+
             $temp = new Temporary;
             $temp->id = $submittedOrder->id;
             $temp->work_period_id = $submittedOrder->work_period_id;
@@ -189,12 +201,12 @@ class KitchenController extends Controller
             $temp->time_to_deliver = $submittedOrder->time_to_deliver;
             $temp->is_accepted = $submittedOrder->is_accepted;
             $temp->is_accepted_by_kitchen = $submittedOrder->is_accepted_by_kitchen;
-            $temp->accepted_by_kitchen_time = $submittedOrder->accepted_by_kitchen_time;
+            $temp->accepted_by_kitchen_time = $updatedDateTime->format('Y-m-d H:i:s');
             $temp->is_cancelled = $submittedOrder->is_cancelled;
             $temp->is_settled = $submittedOrder->is_settled;
             $temp->is_ready = $submittedOrder->is_ready;
             $temp->created_at = $submittedOrder->created_at;
-            $temp->remainingTime = '';
+            $temp->remainingTime = $remainingTimeMinutes;
             //get order items here
             $orderedItems = OnlineOrderItem::where('order_group_id', $submittedOrder->id)->get();
             $temp->orderedItems = $orderedItems;
