@@ -345,6 +345,7 @@ Route::group(['prefix' => 'settings', 'middleware' => ['auth:api']], function ()
         //customer
         Route::get('/get-customer', [CustomerController::class, 'index']); //get all customer
         Route::post('/new-customer', [CustomerController::class, 'store']); //store new customer
+        Route::post('/upload-csv-to-create-new-customer', [CustomerController::class, 'upload_csv']); //store new customer
         Route::post('/update-customer', [CustomerController::class, 'update']); //update customer
         Route::get('/delete-customer/{slug}', [CustomerController::class, 'destroy']); //delete customer
 

@@ -92,6 +92,45 @@ class CustomerController extends Controller
         return $this->index();
     }
 
+    //save new Customer by csv file
+    public function upload_csv(Request $request)
+    {
+        if ($request->hasFile('csv_file')) {
+            $file = $request->file('csv_file');
+            $path = $file->getRealPath();
+
+            // Read the CSV file
+            $data = array_map('str_getcsv', file($path));
+
+            // Remove the header row if necessary
+            $header = array_shift($data);
+
+            // Loop through the data and store it in the database
+            foreach ($data as $row) {
+                $customer = new Customer;
+                $customer->name = $row[0]; //name
+                $customer->email = Str::lower($row[1]); //email
+                $customer->phn_no = $row[2]; //phn_no
+                $customer->address = $row[3]; //address
+                $customer->branch_id = $row[4]; //branch_id
+                $customer->slug =  Str::random(3).'-'.time().'-'.Str::slug($row[0]); //slug
+                $customer->save();
+            }
+
+            // Redirect or return a response indicating success
+            return response()->json([
+                'success' => true,
+                'message' => 'CSV file was uploaded successfully!'
+            ]);
+        }
+
+        // Redirect or return a response indicating failure
+        return response()->json([
+            'success' => true,
+            'message' => 'CSV file was not uploaded!'
+        ]);
+    }
+
     //update customer
     public function update(Request $request)
     {
