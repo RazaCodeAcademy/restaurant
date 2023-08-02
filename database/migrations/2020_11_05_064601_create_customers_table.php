@@ -20,6 +20,7 @@ class CreateCustomersTable extends Migration
             $table->string('email')->nullable()->unique();
             $table->string('phn_no')->nullable()->unique();
             $table->string('address')->nullable();
+            $table->string('zipcode')->nullable();
             $table->unsignedBigInteger('branch_id');
             $table->timestamps();
         });
