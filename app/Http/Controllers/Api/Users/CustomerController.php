@@ -44,6 +44,7 @@ class CustomerController extends Controller
             $temp->phn_no = $customer->phn_no;
             $temp->address = $customer->address;
             $temp->branch_id = $customer->branch_id;
+            $temp->zipcode = $customer->zipcode;
             $branch = Branch::where('id', $customer->branch_id)->first();
             if (!is_null($branch)) {
                 $temp->branch_name = $branch->name;
@@ -107,14 +108,23 @@ class CustomerController extends Controller
 
             // Loop through the data and store it in the database
             foreach ($data as $row) {
-                $customer = new Customer;
-                $customer->name = $row[0]; //name
-                $customer->email = Str::lower($row[1]); //email
-                $customer->phn_no = $row[2]; //phn_no
-                $customer->address = $row[3]; //address
-                $customer->branch_id = $row[4]; //branch_id
-                $customer->slug =  Str::random(3).'-'.time().'-'.Str::slug($row[0]); //slug
-                $customer->save();
+                $slug = Str::random(3).'-'.time().'-'.Str::slug($row[0]);
+                $customer = Customer::where('email', $row[1])
+                ->orWhere('phn_no', $row[2])
+                ->orWhere('slug', $slug)
+                ->first();
+
+                if(empty($customer)){
+                    $customer = new Customer;
+                    $customer->name = $row[0]; //name
+                    $customer->email = $row[1] != '' ? Str::lower($row[1]) : null; //email
+                    $customer->phn_no = $row[2]; //phn_no
+                    $customer->address = $row[3]; //address
+                    $customer->zipcode = $row[4]; //zipcode_id
+                    $customer->branch_id = $row[5]; //branch_id
+                    $customer->slug = $slug; //slug
+                    $customer->save();
+                }
             }
 
             // Redirect or return a response indicating success
